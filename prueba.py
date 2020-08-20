@@ -2,7 +2,7 @@ import os
 import webbrowser
 import time
 
-path = "C:/Users/black/Dropbox/Amazon Alexa"
+path = "../Dropbox/Amazon Alexa"
 
 browser_path = "C:/Users/black/AppData/Local/Programs/Opera GX/launcher.exe %s"
 while(True):
