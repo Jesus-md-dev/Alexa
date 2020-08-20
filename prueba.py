@@ -2,7 +2,7 @@ import os
 import webbrowser
 import time
 
-path = "../Dropbox/Amazon Alexa"
+path = "C:/Users/black/Dropbox/Amazon Alexa"
 
 browser_path = "C:/Users/black/AppData/Local/Programs/Opera GX/launcher.exe %s"
 while(True):
@@ -15,6 +15,8 @@ while(True):
 
         f = open(path+"/"+files[0],"r")
         strings = f.read().split(" ",1)
+        f.close()
+        os.remove(path+"/"+files[0])
 
         if(strings[0] == "bloquear"):
             os.system("rundll32.exe user32.dll, LockWorkStation")
@@ -27,6 +29,4 @@ while(True):
 
         else:
             webbrowser.get(browser_path).open("http://"+strings[0]+".com")
-            f.close()
-
-        os.remove(path+"/"+files[0])
+            
