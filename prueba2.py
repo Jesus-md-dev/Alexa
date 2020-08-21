@@ -1,4 +1,8 @@
-import os
-dir = os.path.dirname(__file__)
-filename = os.path.join(dir, 'Dropbox','Amazon Alexa')
-print(filename)
+import requests
+import time
+
+
+
+
+time.sleep(1)
+
