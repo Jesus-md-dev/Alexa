@@ -2,6 +2,7 @@ import os
 import webbrowser
 import time
 import requests
+import dropbox
 
 headers = {
     'authority': 'ifttt.com',
@@ -24,20 +25,26 @@ data = {
 
 browser_path = "C:/Users/black/AppData/Local/Programs/Opera GX/launcher.exe %s"
 path = "C:/Users/black/Dropbox/Amazon Alexa"
+accessToken = 'sl.AgOGDMe1Va54wk37OzuQCndtndRjUtzeiRSzckFAJZ_LMMfse0TsZB8ZcsLHK_-2faqjdAW-Unrie2qNwdEhaZq7-JLaSQkk9Qt0tcvPoIuM-Tdssz6CU8JwzuC1WNaPFzYSZec'
+folder = "/Amazon Alexa"
 
 while(True):
-    files = os.listdir(path)
-    nfiles = len(files)
+    dbx = dropbox.Dropbox(accessToken)
+    response = dbx.files_list_folder(path=folder)
+    nfiles = len(response.entries)
+
     time.sleep(1)
-    response = requests.post('https://ifttt.com/applets/JjiX7yBU/check', headers=headers, data=data)
+    r = requests.post('https://ifttt.com/applets/JjiX7yBU/check', headers=headers, data=data)
 
     if(nfiles != 0):
         time.sleep(1)
         
-        f = open(path+"/"+files[0],"r")
-        strings = f.read().split(" ",1)
-        f.close()
-        os.remove(path+"/"+files[0])
+        path = folder+"/"+response.entries[0].name
+        md,res = dbx.files_download(path)
+
+        strings = res.content.decode().split(" ",1)
+
+        dbx.files_delete_v2(path)
 
         if(strings[0] == "bloquear"):
             os.system("rundll32.exe user32.dll, LockWorkStation")
